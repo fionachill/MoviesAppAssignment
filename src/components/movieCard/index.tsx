@@ -44,6 +44,7 @@ const MovieCard: React.FC<BaseMovieProps> = (movie) => {
                         </Grid>
                         <Grid item xs={6}>
                             <Typography variant="h6" component="p">
+                                <StarRateIcon fontSize="small" />
                                 {" "} {movie.vote_average}{" "}
                             </Typography>
                         </Grid>
