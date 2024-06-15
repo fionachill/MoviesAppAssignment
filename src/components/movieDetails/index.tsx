@@ -30,7 +30,7 @@ const MovieDetails: React.FC<MovieDetailsProps> = (movie) => {
                 Overview
             </Typography>
 
-            <Typography variant="h6" componet="p">
+            <Typography variant="h6" component="p">
                 {movie.overview}
             </Typography>
 
