@@ -5,6 +5,7 @@ import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 
+
 const styles = {
     root: {
         display: "flex",
@@ -29,7 +30,7 @@ const Header: React.FC<HeaderProps> = (headerProps) => {
             >
                 <ArrowBackIcon color="primary" fontSize="large" />
             </IconButton>
-
+        
             <Typography variant="h4" component="h3">
                 {title}
             </Typography>
