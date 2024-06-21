@@ -31,7 +31,7 @@ const SiteHeader: React.FC = () => {
     const menuOptions = [
         { label: "Home", path: "/" },
         { label: "Favourites", path: "/movies/favourites" },
-        { label: "Option 3", path: "/" },
+        { label: "Upcoming", path: "/movies/upcoming" },
         { label: "Option 4", path: "/" },
     ];
 
@@ -80,14 +80,14 @@ const SiteHeader: React.FC = () => {
                                     open={open}
                                     onClose={() => setAnchorEl(null)}
                                     >
-                                        {menuOptions.map((opt) => (
-                                            <MenuItem
-                                                key={opt.label}
-                                                onClick={() => handleMenuSelect(opt.path)}
-                                                >
-                                                    {opt.label}
-                                                </MenuItem>
-                                        ))}
+                                    {menuOptions.map((opt) => (
+                                        <MenuItem
+                                            key={opt.label}
+                                            onClick={() => handleMenuSelect(opt.path)}
+                                        >
+                                            {opt.label}
+                                        </MenuItem>
+                                    ))}
                                 </Menu>
                         </>
                     ) : (
@@ -97,9 +97,9 @@ const SiteHeader: React.FC = () => {
                                     key={opt.label}
                                     color="inherit"
                                     onClick={() => handleMenuSelect(opt.path)}
-                                    >
-                                        {opt.label}
-                                    </Button>
+                                >
+                                    {opt.label}
+                                </Button>
                             ))}
                         </>
                     )}
