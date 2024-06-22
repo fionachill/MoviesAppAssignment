@@ -12,7 +12,6 @@ import FavouriteIcon from "@mui/icons-material/Favorite";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
 import img from "../../images/film-poster-placeholder.png";
 import { BaseMovieProps } from "../../types/interfaces";
 import { MoviesContext } from "../../contexts/moviesContext";
@@ -27,19 +26,14 @@ const styles = {
 
 interface MovieCardProps {
     movie: BaseMovieProps;
-    selectFavourite: (movieId: number) => void;
+    action: (m: BaseMovieProps) => React.ReactNode;
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({movie, selectFavourite}) => {
+const MovieCard: React.FC<MovieCardProps> = ({movie, action}) => {
     const { favourites, addToFavourites } = useContext(MoviesContext);
 
     if (favourites.find((id) => id === movie.id)) 
         movie.favourite = true;    
-
-    const handleAddToFavourite = (e: MouseEvent<HTMLButtonElement>) => { 
-        e.preventDefault();
-        addToFavourites(movie);
-    };
 
 
     return (
@@ -82,9 +76,7 @@ const MovieCard: React.FC<MovieCardProps> = ({movie, selectFavourite}) => {
                     </Grid>
                 </CardContent>
                 <CardActions>
-                    <IconButton aria-label="add to favourites" onClick={handleAddToFavourite}>
-                        <FavouriteIcon color="primary" fontSize="large" />
-                    </IconButton>
+                    {action(movie)}
                     <Link to={`/movies/${movie.id}`}>
                         <Button variant="outlined" size="medium" color="primary">
                             More Info ...
