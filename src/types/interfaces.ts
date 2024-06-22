@@ -34,8 +34,6 @@ export interface MovieDetailsProps extends BaseMovieProps {
     }[];
 }
 
-
-
 export interface MovieImage {
     file_path: string;
     aspect_ratio?: number; //some props are optional... the property may not be present but that won't cause issues
@@ -59,6 +57,20 @@ export interface Review {
     id: string;
     content: string;
     author: string;
+}
+
+export interface GenreData {
+    genres: {
+        id: string;
+        name: string
+    }[];
+}
+
+export interface DiscoverMovies {
+    page: number;
+    total_pages: number;
+    total_results: number;
+    results: BaseMovieProps[];
 }
 
 export type FilterOption = "title" | "genre";
