@@ -1,4 +1,4 @@
-import React, {MouseEvent} from "react";
+import React, {MouseEvent, useContext } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Card from "@mui/material/Card";
@@ -15,6 +15,7 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import img from "../../images/film-poster-placeholder.png";
 import { BaseMovieProps } from "../../types/interfaces";
+import { MoviesContext } from "../../contexts/moviesContext";
 
 const styles = {
     card: {maxWidth: 345 },
@@ -30,10 +31,14 @@ interface MovieCardProps {
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({movie, selectFavourite}) => {
+    const { favourites, addToFavourites } = useContext(MoviesContext);
 
-    const handleAddToFavourite = (e: MouseEvent<HTMLButtonElement>) => {
+    if (favourites.find((id) => id === movie.id)) 
+        movie.favourite = true;    
+
+    const handleAddToFavourite = (e: MouseEvent<HTMLButtonElement>) => { 
         e.preventDefault();
-        selectFavourite(movie.id);
+        addToFavourites(movie);
     };
 
 
