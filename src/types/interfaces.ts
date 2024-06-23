@@ -66,7 +66,16 @@ export interface GenreData {
     }[];
 }
 
+
+
 export interface DiscoverMovies {
+    page: number;
+    total_pages: number;
+    total_results: number;
+    results: BaseMovieProps[];
+}
+
+export interface UpcomingMovies {
     page: number;
     total_pages: number;
     total_results: number;
