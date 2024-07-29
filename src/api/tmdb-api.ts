@@ -75,3 +75,16 @@ export const getUpcomingMovies = () => {
         throw error
     });
 };
+
+export const getAnimatedMovies = () => {
+    return fetch(
+         `https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&include_adult=false&with_genres=animation&page=1`
+    ).then((response) => {
+        if (!response.ok)
+            throw new Error(`Unable to fetch animated movies. Response status: ${response.status}`)
+        return response.json();
+    })
+    .catch((error) => {
+        throw error
+    });
+};
