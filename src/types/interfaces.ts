@@ -98,6 +98,10 @@ export interface BaseTvShowProps {
     vote_count: string
 }
 
+export interface BaseTvShowListProps {
+    tvshows: BaseTvShow[];
+}
+
 export interface Review {
     author: string,
     content: string,

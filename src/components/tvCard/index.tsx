@@ -8,7 +8,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
-import StarRateIcon from "@mui/icons-material/StarRate";
+// import StarRateIcon from "@mui/icons-material/StarRate";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import img from '../../images/film-poster-placeholder.png';
@@ -39,7 +39,7 @@ const TvCard: React.FC<BaseTvShowProps> = (tvshow) => {
                 <Grid container>
                     <Grid item xs={6}>
                         <Typography variant="h6" component="p">
-                            <CalendarIcon fontsize="small" />
+                            <CalendarIcon fontSize="small" />
                             {tvshow.first_air_date}
                         </Typography>
                     </Grid>

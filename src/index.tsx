@@ -11,6 +11,11 @@ import UpcomingMoviesPage from "./pages/upcomingMoviesPage";
 import SiteHeader from "./components/siteHeader";
 import MoviesContextProvider from "./contexts/moviesContext";
 import AddMovieReviewPage from "./pages/addMovieReviewPage";
+import TvShowsPage from "./pages/tvShowsPage";
+import sample from "./stories/sampleTvData";
+
+const tvshows = [sample, sample, sample, sample, sample, sample, sample ];
+
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -35,6 +40,7 @@ const App = () => {
                             <Route path="/movies/favourites" element={<FavouriteMoviesPage />} />
                             <Route path="/movies/:id" element={<MoviePage />} />
                             <Route path="/" element={<HomePage />} />
+                            <Route path="/tv" element={<TvShowsPage tvshows={tvshows} />} />
                             <Route path="*" element={<Navigate to="/" />} />
                         </Routes>
                     </MoviesContextProvider>  
