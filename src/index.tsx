@@ -13,15 +13,8 @@ import MoviesContextProvider from "./contexts/moviesContext";
 import AddMovieReviewPage from "./pages/addMovieReviewPage";
 import TvShowsPage from "./pages/tvShowsPage";
 import TvDetailsPage from "./pages/tvDetailsPage";
-import {tvImage} from "./types/interfaces";
-import sample from "./stories/sampleTvData";
 
-const tvshows = [sample, sample, sample, sample, sample, sample, sample ];
-const tvImages: tvImage[] = [
-    { file_path: "/r9KaBE7i4ovg8uSppQrCp6ZdPD9.jpg"},
-    { file_path: "/npD65vPa4vvn1ZHpp3o05A5vdKT.jpg" },
-    { file_path: "/ecl98P5f0S9rrZjTDHhuz1yEZA3.jpg" },
-];
+
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -46,8 +39,8 @@ const App = () => {
                             <Route path="/movies/favourites" element={<FavouriteMoviesPage />} />
                             <Route path="/movies/:id" element={<MoviePage />} />
                             <Route path="/" element={<HomePage />} />
-                            <Route path="/tv" element={<TvShowsPage tvshows={tvshows} />} />
-                            <Route path="tv/:id" element={<TvDetailsPage tvshow={sample} images={tvImages} />} />
+                            <Route path="/tv" element={<TvShowsPage />} />
+                            <Route path="/tv/:id" element={<TvDetailsPage />} />
                             <Route path="*" element={<Navigate to="/" />} />
                         </Routes>
                     </MoviesContextProvider>  

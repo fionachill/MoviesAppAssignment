@@ -95,7 +95,8 @@ export interface BaseTvShowProps {
     first_air_date: string,
     name: string,
     vote_average: number,
-    vote_count: string
+    vote_count: string,
+    genre_ids?: number[];
 }
 
 export interface BaseTvShowListProps {

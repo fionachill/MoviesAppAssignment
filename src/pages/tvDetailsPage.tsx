@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import { useParams } from "react-router-dom";
 import TvDetails from "../components/tvDetails";
 import Grid from "@mui/material/Grid";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-import { TvPageProps } from "../types/interfaces";
+import { TvDetailsProps, TvImage } from "../types/interfaces";
 
 const styles = {
     imageListRoot: {
@@ -18,7 +19,35 @@ const styles = {
 
 };
 
-const TvPage: React.FC<TvPageProps> = ({tvshow, images}) => {
+const TvPage: React.FC= () => {
+
+    const { id } = useParams();
+    const [tvshow, setTvshow ] = useState<TvDetailsProps>();
+    const [images, setImages] = useState<TvImage[]>([]);
+
+    useEffect(() => {
+        fetch(
+            `https://api.themoviedb.org/3/tv/${id}?api_key=${import.meta.env.VITE_TMDB_KEY}`
+        )
+        .then((res) => {
+            return res.json();
+        })
+        .then((tvshow) => {
+            setTvshow(tvshow);
+        });
+    }, [id]);
+
+    useEffect(() => {
+        fetch(
+          `https://api.themoviedb.org/3/tv/${id}/images?api_key=${import.meta.env.VITE_TMDB_KEY}`  
+        )
+        .then((res) => res.json())
+        .then((json) => json.posters)
+        .then((images) => {
+          setImages(images);
+    });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
     return (
         <>
