@@ -13,6 +13,7 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import img from '../../images/film-poster-placeholder.png';
 import { BaseTvShowProps } from "../../types/interfaces";
+import { Link } from "react-router-dom"; 
 
 const styles = {
     card: { maxWidth: 345 },
@@ -49,9 +50,11 @@ const TvCard: React.FC<BaseTvShowProps> = (tvshow) => {
                 <IconButton aria-label="add to favourites">
                     <FavoriteIcon color="primary"  fontSize="large"/>
                 </IconButton>
-                <Button variant="outlined" size="medium" color="primary">
-                    More info....
-                </Button>
+                <Link to={`/tv/${tvshow.id}`}>
+                    <Button variant="outlined" size="medium" color="primary">
+                        More info....
+                    </Button>
+                </Link>
             </CardActions>
         </Card>
     );
