@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
+import { FilterOption } from "../../types/interfaces";
+import { SelectChangeEvent } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -9,6 +11,7 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import SortIcon from "@mui/icons-material/Sort";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { getGenres } from "../../api/tmdb-api";
 
 const styles = {
     root: {
@@ -23,13 +26,34 @@ const styles = {
     },
 };
 
-const FilterTvShowsCard: React.FC= () => {
+interface FilterTvCardsProps {
+    onUserInput: (f: FilterOption, s: string) => void;
+    titleFilter: string;
+    genreFilter: string;
+}
 
-    const genres = [
-        {id: 10759, name: "Action & Adventure"},
-        {id: 18, name: "Drama"},
-        {id: 10765, name: "Sci-Fi & Fantasy"},  
-    ]
+const FilterTvShowsCard: React.FC<FilterTvCardsProps>= ({ titleFilter, genreFilter, onUserInput}) => {
+const [ genres, setGenres ] = useState([{ id: "0", name: "All"}])
+
+    useEffect(() => {
+       getGenres().then((allGenres) => {
+        setGenres([genres[0], ...allGenres]);
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const handleChange = (e: SelectChangeEvent, type: FilterOption, value: string) => {
+        e.preventDefault()
+        onUserInput(type, value);
+    };
+
+    const handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
+        handleChange(e, "title", e.target.value)
+    };
+
+    const handleGenreChange = (e: SelectChangeEvent) => {
+        handleChange(e, "genre", e.target.value)
+    };
 
     return (
         <>
@@ -44,13 +68,17 @@ const FilterTvShowsCard: React.FC= () => {
                         id="filled-search"
                         label="Search field"
                         type="search"
+                        value={titleFilter}
                         variant="filled"
+                        onChange={handleTextChange}
                     />
                     <FormControl sx={styles.formControl}>
                         <InputLabel id="genre-label">Genre</InputLabel>
                         <Select
                             labelId="genre-label"
                             id="genre-select"
+                            value={genreFilter}
+                            onChange={handleGenreChange}
                         >
                             {genres.map((genre) => {
                                 return (

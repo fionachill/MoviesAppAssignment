@@ -5,6 +5,7 @@ import Grid from "@mui/material/Grid";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { TvDetailsProps, TvImage } from "../types/interfaces";
+import { getTvShow, getTvImages } from "../api/tmdb-api";
 
 const styles = {
     imageListRoot: {
@@ -26,26 +27,15 @@ const TvPage: React.FC= () => {
     const [images, setImages] = useState<TvImage[]>([]);
 
     useEffect(() => {
-        fetch(
-            `https://api.themoviedb.org/3/tv/${id}?api_key=${import.meta.env.VITE_TMDB_KEY}`
-        )
-        .then((res) => {
-            return res.json();
-        })
-        .then((tvshow) => {
+        getTvShow(id ?? "").then((tvshow) => {
             setTvshow(tvshow);
         });
     }, [id]);
 
     useEffect(() => {
-        fetch(
-          `https://api.themoviedb.org/3/tv/${id}/images?api_key=${import.meta.env.VITE_TMDB_KEY}`  
-        )
-        .then((res) => res.json())
-        .then((json) => json.posters)
-        .then((images) => {
-          setImages(images);
-    });
+      getTvImages(id ?? "").then((images) => {
+        setImages(images);
+      });
         // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

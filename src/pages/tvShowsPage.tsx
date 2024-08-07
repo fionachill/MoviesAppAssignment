@@ -3,40 +3,79 @@ import Header from "../components/headerMovieList";
 import Grid from "@mui/material/Grid";
 import TvList from "../components/tvShowList";
 import { BaseTvShowProps } from "../types/interfaces";
+import { Drawer, Fab } from "@mui/material";
+import FilterTvShowsCard from "../components/filterTvShowsCard";
+import { getTvShows } from "../api/tmdb-api";
 
 const styles = {
     root: {
         padding: "20px",
+    }, fab: {
+        marginTop: 8,
+        position: "fixed",
+        top: 2,
+        right: 2,
     },
 };
 
 const TvShowsPage: React.FC= () => {
-
     const [tvshows, setTvShows] = useState<BaseTvShowProps[]>([]);
+    const [titleFilter, setTitleFilter] = useState("");
+    const [genreFilter, setGenreFilter] = useState("0");
+    const [drawerOpen, setDrawerOpen] = useState(false);
+
+    const genreId = Number(genreFilter);
+
+    let displayedTvShows = tvshows
+    .filter((t: BaseTvShowProps) => {
+        return t.name.toLowerCase().search(titleFilter.toLowerCase()) !== -1;
+    })
+    .filter((t: BaseTvShowProps) => {
+        return genreId > 0 ? t.genre_ids?.includes(genreId) : true;
+    });
+
+    const handleChange = (type: FilterOption, value: string) => {
+        if (type === "title") setTitleFilter(value);
+        else setGenreFilter(value);
+    };
 
 useEffect(() => {
-    fetch(
-        `https://api.themoviedb.org/3/discover/tv?api_key=${import.meta.env.VITE_TMDB_KEY}&include_adult=false&include_null_first_air_dates=false&language=en-US&page=1`
-    )
-    .then((res) => res.json())
-    .then((json) => {
-        console.log(json);
-        return json.results;
-    })
-    .then((tvshows) => {
+    getTvShows().then(tvshows => {
         setTvShows(tvshows);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
 }, []);
 
     return (
+        <>
         <Grid container sx={styles.root}>
             <Grid item xs={12}>
                 <Header title={"TV Shows"} />
             </Grid>
             <Grid item container spacing={5}>
-                <TvList tvshows={tvshows}></TvList>
+                <TvList tvshows={displayedTvShows}></TvList>
             </Grid>
         </Grid>
+        <Fab
+            color="secondary"
+            variant="extended"
+            onClick={() => setDrawerOpen(true)}
+            sx={styles.fab}
+            >
+                Filter
+            </Fab>
+            <Drawer
+                anchor="left"
+                open={drawerOpen}
+                onClose={() => setDrawerOpen(false)}
+            >
+                <FilterTvShowsCard
+                    onUserInput={handleChange}
+                    titleFilter={titleFilter}
+                    genreFilter={genreFilter}
+                />
+            </Drawer>
+        </>    
     );
 };
 
