@@ -1,4 +1,4 @@
-// vite-env.t.ts
+// vite-env.d.ts
 interface ImportMeta {
     env: Record<string, string>;
 }

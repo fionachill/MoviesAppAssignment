@@ -96,7 +96,6 @@ export interface BaseTvShowProps {
     name: string,
     vote_average: number,
     vote_count: string,
-    genre_ids?: number[];
 }
 
 export interface BaseTvShowListProps {
