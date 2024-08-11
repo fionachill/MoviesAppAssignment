@@ -11,7 +11,7 @@ This repository contains an implementation of the Movie Fans Web Application usi
 ### Features
 [ A bullet-point list of the __new features__ you added to the Movies Fan app (and any **modifications to existing features**) .]
 
-+ Feature 1
++ New page showing a list of TV shows using the TMDB Discover TV shows endpoint. User can click a button on each TV show card to go to a page with more details of the tv show. These have been routed correctly, and the tv show link uses a paramaterised link. 
 + Feature 2
 + Feature 3
 + etc
