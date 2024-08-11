@@ -132,4 +132,58 @@ export interface Review {
     movieId: number,
 }
 
+export interface BaseCastProps {
+    id: number, 
+    cast: [
+        adult: boolean,
+        gender: number,
+        id: number,
+        known_for_department: string,
+        name: string,
+        original_name?: string,
+        popularity?: number,
+        profile_path?: string,
+        roles?: [
+            {
+                credit_id: string,
+                character: string,
+                episode_count: number
+            }
+        ],
+        total_episode_count?: number,
+        order?: number,
+        jobs?: [
+            {
+                credit_id: string,
+                job: string,
+                episode_count: number
+            }
+        ],
+        department?: string,
+    ] 
+}
+
+export interface BaseTvCastListProps {
+    credits: BaseCastProps[];
+}
+
+export interface Person {
+    adult: boolean,
+    also_known_as: string[],
+    biography?: string,
+    birthday: string,
+    deathday?: string,
+    gender: number,
+    homepage?: string,
+    id: number,
+    imdb_id: number,
+    known_for_department: string,
+    name: string,
+    place_of_birth?: string,
+    popularity: number,
+    profile_path: string
+  }
+}
+
+
 export type FilterOption = "title" | "genre";

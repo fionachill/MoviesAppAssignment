@@ -55,7 +55,7 @@ const TemplateMoviePage: React.FC<TemplateMoviePageProps> = ({movie, children}) 
                             {images.map((image: MovieImage) => (
                                 <ImageListItem 
                                 key={image.file_path}
-                                sx={styles.gridListTile}
+                                sx={styles.gridListTitle}
                                 cols={1}
                                 >
                                     <img 

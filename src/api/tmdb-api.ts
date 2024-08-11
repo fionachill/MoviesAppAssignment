@@ -112,6 +112,15 @@ export const getTvImages = ( id: string | number ) => {
     .then((json) => json.posters);
 };
 
+export const getTvCast = ( id: string | number ) => {
+    return fetch(
+        `https://api.themoviedb.org/3/tv/${id}/aggregate_credits?api_key=` +
+        import.meta.env.VITE_TMDB_KEY +
+        "&language=en-US"
+    )
+    .then(res => res.json())
+};
+
 export const getTvGenres = () => {
     return fetch(
          "https://api.themoviedb.org/3/genre/tv/list?api_key=" +

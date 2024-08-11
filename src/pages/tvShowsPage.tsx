@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import Header from "../components/headerMovieList";
 import Grid from "@mui/material/Grid";
 import TvList from "../components/tvShowList";
@@ -6,6 +6,8 @@ import { BaseTvShowProps } from "../types/interfaces";
 import { Drawer, Fab } from "@mui/material";
 import FilterTvShowsCard from "../components/filterTvShowsCard";
 import { getTvShows } from "../api/tmdb-api";
+import { SelectChangeEvent } from "@mui/material";
+import { FilterOption } from "../types/interfaces";
 
 const styles = {
     root: {
@@ -18,6 +20,7 @@ const styles = {
     },
 };
 
+
 const TvShowsPage: React.FC= () => {
     const [tvshows, setTvShows] = useState<BaseTvShowProps[]>([]);
     const [titleFilter, setTitleFilter] = useState("");
@@ -25,7 +28,7 @@ const TvShowsPage: React.FC= () => {
     const [drawerOpen, setDrawerOpen] = useState(false);
 
     const genreId = Number(genreFilter);
-
+    // eslint-disable-next-line prefer-const
     let displayedTvShows = tvshows
     .filter((t: BaseTvShowProps) => {
         return t.name.toLowerCase().search(titleFilter.toLowerCase()) !== -1;
@@ -34,7 +37,8 @@ const TvShowsPage: React.FC= () => {
         return genreId > 0 ? t.genre_ids?.includes(genreId) : true;
     });
 
-    const handleChange = (type: FilterOption, value: string) => {
+    const handleChange = (e: SelectChangeEvent, type: FilterOption, value: string) => {
+        e.preventDefault();
         if (type === "title") setTitleFilter(value);
         else setGenreFilter(value);
     };
