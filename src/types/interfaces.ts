@@ -100,7 +100,7 @@ export interface BaseTvShowProps {
 
 export interface BaseTvShowListProps {
     tvshows: BaseTvShow[];
-    action: (t: BaseTvShowProps) => React.ReactNode;
+    // action: (t: BaseTvShowProps) => React.ReactNode;
 }
 
 export interface TVListPageProps extends BaseTvShowListProps {
@@ -135,6 +135,13 @@ export interface Review {
     agree: boolean,
     rating: number,
     movieId: number,
+}
+
+export interface DiscoverTvShows {
+    page: number,
+    total_pages: number,
+    total_results: number,
+    results: BaseTvShowProps[];
 }
 
 export interface BaseCastProps {
@@ -188,7 +195,7 @@ export interface Person {
     popularity: number,
     profile_path: string
   }
-}
+
 
 
 export type FilterOption = "title" | "genre" | "name";

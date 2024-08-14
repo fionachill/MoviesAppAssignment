@@ -8,6 +8,10 @@ import {  TvImage} from "../types/interfaces";
 import {  getTvImages } from "../api/tmdb-api";
 // import TvCreditsList from "../components/tvCredits";
 import useTV from "../hooks/useTVShow.ts";
+import { getTvShow } from "../api/tmdb-api";
+import { useQuery } from "react-query";
+import Spinner from "../components/spinner";
+import { TvDetailsProps } from "../types/interfaces";
 
 const styles = {
     imageListRoot: {
@@ -25,16 +29,24 @@ const styles = {
 const TvPage: React.FC= () => {
 
     const { id } = useParams();
-    const [tvshow] = useTV(id ?? "");
-    // const [tvshow, setTvshow ] = useState<TvDetailsProps>();
+    const { data: tvshow, error, isLoading, isError } = useQuery<TvDetailsProps, Error>(
+        ["tvshow", id],
+        ()=> getTvShow(id||"")
+    );
+
+
+    // const [tvshow] = useTV(id ?? "");
+    // // const [tvshow, setTvshow ] = useState<TvDetailsProps>();
     const [images, setImages] = useState<TvImage[]>([]);
     // const [credits, setCredits] = useState<BaseTvCastListProps[]>([]);
 
-//     useEffect(() => {
-//         getTvShow(id ?? "").then((tvshow) => {
-//             setTvshow(tvshow);
-//         });
-//     }, [id]);
+    if (isLoading) {
+        return <Spinner />;
+    }
+
+    if (isError) {
+        return <h1>{(error as Error).message}</h1>;
+    }
 
     useEffect(() => {
       getTvImages(id ?? "").then((images) => {
