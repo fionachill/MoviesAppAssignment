@@ -6,7 +6,7 @@ import { Drawer, Fab } from "@mui/material";
 // import FilterTvShowsCard from "../components/filterTvShowsCard";
 import { getTvShows } from "../api/tmdb-api";
 // import { SelectChangeEvent } from "@mui/material";
-import { BaseTvShowProps } from "../types/interfaces";
+import { BaseTvShowProps, TvPageProps, TVListPageProps } from "../types/interfaces";
 import useFiltering from "../hooks/useFiltering";
 import TVFilterUI, {
     titleFilter,
@@ -36,7 +36,7 @@ const styles = {
 };
 
 
-const TvShowsPage: React.FC= () => {
+const TvShowsPage: React.FC = () => {
     const [tvshows, setTvShows] = useState<BaseTvShowProps[]>([]);
     // const [titleFilter, setTitleFilter] = useState("");
     // const [genreFilter, setGenreFilter] = useState("0");
@@ -48,7 +48,7 @@ const TvShowsPage: React.FC= () => {
     const changeFilterValues = (type: string, value: string) => {
         const changedFilter = {name: type, value: value};
         const updatedFilterSet =
-        type === "title"
+        type === "name"
             ? [changedFilter, filterValues[1]]
             : [filterValues[0], changedFilter];
         setFilterValues(updatedFilterSet);
@@ -88,7 +88,7 @@ useEffect(() => {
                 <TvList tvshows={displayedTvShows}></TvList>
             </Grid>
         </Grid>
-        <Fab
+        {/* <Fab
             color="secondary"
             variant="extended"
             onClick={() => setDrawerOpen(true)}
@@ -100,13 +100,13 @@ useEffect(() => {
                 anchor="left"
                 open={drawerOpen}
                 onClose={() => setDrawerOpen(false)}
-            >
+            > */}
                 <TVFilterUI
                     onFilterValuesChange={changeFilterValues}
                     titleFilter={filterValues[0].value}
                     genreFilter={filterValues[1].value}
                 />
-            </Drawer>
+            {/* </Drawer> */}
         </>    
     );
 };

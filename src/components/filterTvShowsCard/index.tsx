@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { ChangeEvent } from "react";
 import { FilterOption, GenreData } from "../../types/interfaces";
 import { SelectChangeEvent } from "@mui/material";
 import Card from "@mui/material/Card";
@@ -30,13 +30,12 @@ const styles = {
 
 interface FilterTvCardsProps {
     onUserInput: (f: FilterOption, s: string) => void;
-    titleFilter: string;
+    nameFilter: string;
     genreFilter: string;
 }
 
-const FilterTvShowsCard: React.FC<FilterTvCardsProps>= ({ titleFilter, genreFilter, onUserInput}) => {
+const FilterTvShowsCard: React.FC<FilterTvCardsProps>= ({ nameFilter, genreFilter, onUserInput}) => {
 const { data, error, isLoading, isError } = useQuery<GenreData, Error>("genres", getTvGenres);
-// const [ genres, setGenres ] = useState([{ id: "0", name: "All"}])
 
     if (isLoading) {
         return <Spinner />;
@@ -48,12 +47,6 @@ const { data, error, isLoading, isError } = useQuery<GenreData, Error>("genres",
     if (genres[0].name !== "All") {
         genres.unshift({ id: "0", name: "All"});
     }
-    // useEffect(() => {
-    //     getTvGenres().then((apiGenres) => {
-    //     setGenres([genres[0], ...apiGenres]);
-    //     });
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
 
     const handleChange = (e: SelectChangeEvent, type: FilterOption, value: string) => {
         e.preventDefault()
@@ -61,7 +54,7 @@ const { data, error, isLoading, isError } = useQuery<GenreData, Error>("genres",
     };
 
     const handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
-        handleChange(e, "title", e.target.value)
+        handleChange(e, "name", e.target.value)
     }
 
     const handleGenreChange = (e: SelectChangeEvent) => {
@@ -81,7 +74,7 @@ const { data, error, isLoading, isError } = useQuery<GenreData, Error>("genres",
                         id="filled-search"
                         label="Search field"
                         type="search"
-                        value={titleFilter}
+                        value={nameFilter}
                         variant="filled"
                         onChange={handleTextChange}
                     />

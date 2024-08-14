@@ -121,6 +121,7 @@ export const getTvCast = ( id: string | number ) => {
     .then(res => res.json())
 };
 
+
 export const getTvGenres = () => {
     return fetch(
          "https://api.themoviedb.org/3/genre/tv/list?api_key=" +

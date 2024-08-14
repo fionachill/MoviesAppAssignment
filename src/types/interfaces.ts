@@ -100,6 +100,11 @@ export interface BaseTvShowProps {
 
 export interface BaseTvShowListProps {
     tvshows: BaseTvShow[];
+    action: (t: BaseTvShowProps) => React.ReactNode;
+}
+
+export interface TVListPageProps extends BaseTvShowListProps {
+    name: string;
 }
 
 export interface TvDetailsProps extends BaseTvShowProps {
@@ -186,4 +191,4 @@ export interface Person {
 }
 
 
-export type FilterOption = "title" | "genre";
+export type FilterOption = "title" | "genre" | "name";

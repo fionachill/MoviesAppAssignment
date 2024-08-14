@@ -4,9 +4,10 @@ import TvDetails from "../components/tvDetails";
 import Grid from "@mui/material/Grid";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-import { TvDetailsProps, TvImage, BaseTvCastListProps} from "../types/interfaces";
-import { getTvShow, getTvImages, getTvCast } from "../api/tmdb-api";
-import TvCreditsList from "../components/tvCredits";
+import {  TvImage} from "../types/interfaces";
+import {  getTvImages } from "../api/tmdb-api";
+// import TvCreditsList from "../components/tvCredits";
+import useTV from "../hooks/useTVShow.ts";
 
 const styles = {
     imageListRoot: {
@@ -24,15 +25,16 @@ const styles = {
 const TvPage: React.FC= () => {
 
     const { id } = useParams();
-    const [tvshow, setTvshow ] = useState<TvDetailsProps>();
+    const [tvshow] = useTV(id ?? "");
+    // const [tvshow, setTvshow ] = useState<TvDetailsProps>();
     const [images, setImages] = useState<TvImage[]>([]);
-    const [credits, setCredits] = useState<BaseTvCastListProps[]>([]);
+    // const [credits, setCredits] = useState<BaseTvCastListProps[]>([]);
 
-    useEffect(() => {
-        getTvShow(id ?? "").then((tvshow) => {
-            setTvshow(tvshow);
-        });
-    }, [id]);
+//     useEffect(() => {
+//         getTvShow(id ?? "").then((tvshow) => {
+//             setTvshow(tvshow);
+//         });
+//     }, [id]);
 
     useEffect(() => {
       getTvImages(id ?? "").then((images) => {
@@ -41,12 +43,12 @@ const TvPage: React.FC= () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-    useEffect(() => {
-        getTvCast(id ?? "").then((credits) => {
-        setCredits(credits);
-    });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+//     useEffect(() => {
+//         getTvCast(id ?? "").then((credits) => {
+//         setCredits(credits);
+//     });
+//         // eslint-disable-next-line react-hooks/exhaustive-deps
+//   }, []);
 
     return (
         <>
@@ -74,9 +76,9 @@ const TvPage: React.FC= () => {
                     <Grid item xs={9}>
                         <TvDetails {...tvshow} />
                     </Grid>
-                    <Grid item xs={9}>
+                    {/* <Grid item xs={9}>
                         <TvCreditsList credits={credits} />
-                    </Grid>
+                    </Grid> */}
                 </Grid>
                 </>
             ) : (
