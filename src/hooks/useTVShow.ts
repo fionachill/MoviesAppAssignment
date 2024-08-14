@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { getTVShow } from "../api/tmdb-api";
-import { TVDetailsProps } from "../types/interfaces";
+import { getTvShow } from "../api/tmdb-api";
+import { TvDetailsProps } from "../types/interfaces";
 
-type TVHookReturnType = [TVDetailsProps | undefined, React.Dispatch<React.SetStateAction<TVDetailsProps | undefined>>];
+type TVHookReturnType = [TvDetailsProps | undefined, React.Dispatch<React.SetStateAction<TVDetailsProps | undefined>>];
 
 const useTV = (id: string):TVHookReturnType => {
-    const [tvshow, setTVShow] = useState<MovieDetailsProps>();
+    const [tvshow, setTVShow] = useState<TvDetailsProps>();
     useEffect(() => {
-        getTVShow(id).then(tvshow => {
+        getTvShow(id).then(tvshow => {
             setTVShow(tvshow);
         });
     }, [id]);
