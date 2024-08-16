@@ -67,7 +67,6 @@ export interface GenreData {
 }
 
 
-
 export interface DiscoverMovies {
     page: number;
     total_pages: number;
@@ -99,11 +98,11 @@ export interface BaseTvShowProps {
 }
 
 export interface BaseTvShowListProps {
-    tvshows: BaseTvShow[];
-    // action: (t: BaseTvShowProps) => React.ReactNode;
+    tvshows: BaseTvShowProps[];
+    action: (t: BaseTvShowProps) => React.ReactNode;
 }
 
-export interface TVListPageProps extends BaseTvShowListProps {
+export interface TVListPageTemplateProps extends BaseTvShowListProps {
     name: string;
 }
 

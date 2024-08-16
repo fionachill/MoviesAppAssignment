@@ -1,7 +1,5 @@
 import React from "react";
-import Header from "../components/headerMovieList";
-import Grid from "@mui/material/Grid";
-import TvList from "../components/tvShowList";
+import PageTemplate from "../components/templateTVListPage"; 
 import { getTvShows } from "../api/tmdb-api";
 import useFiltering from "../hooks/useFiltering";
 import TVFilterUI, {
@@ -11,7 +9,8 @@ import TVFilterUI, {
 import { DiscoverTvShows } from "../types/interfaces";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
-
+import AddToFavouritesIcon from "../components/cardIcons/addToTvFavourites";
+import { BaseTvShowProps } from "../types/interfaces";
 
 const titleFiltering = {
     name: "name",
@@ -22,17 +21,6 @@ const genreFiltering = {
     name: "genre",
     value: "0",
     condition: genreFilter,
-};
-
-const styles = {
-    root: {
-        padding: "20px",
-    }, fab: {
-        marginTop: 8,
-        position: "fixed",
-        top: 2,
-        right: 2,
-    },
 };
 
 
@@ -62,17 +50,19 @@ const TvShowsPage: React.FC = () => {
     const tvshows = data ? data.results: [];
     const displayedTvShows = filterFunction(tvshows);
 
+    // const favourites = tvshows.filter(t => t.favourite);
+    // localStorage.setItem("favourites", JSON.stringify(favourites));
+    // const addToTVFavourites = (tvId: number) => true;
+
     return (
         <>
-            <Grid container sx={styles.root}>
-                <Grid item xs={12}>
-                    <Header title={"TV Shows"} />
-                </Grid>
-                <Grid item container spacing={5}>
-                    <TvList tvshows={displayedTvShows}></TvList>
-                </Grid>
-            </Grid>
-    
+            <PageTemplate
+                name="Discover TV Shows"
+                tvshows={displayedTvShows}
+                action={(tvshow: BaseTvShowProps) => {
+                    return <AddToFavouritesIcon {...tvshow} />
+                }}
+            />    
             <TVFilterUI
                 onFilterValuesChange={changeFilterValues}
                 titleFilter={filterValues[0].value}

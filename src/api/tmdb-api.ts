@@ -76,18 +76,6 @@ export const getUpcomingMovies = () => {
     });
 };
 
-// export const getAnimatedMovies = () => {
-//     return fetch(
-//          `https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&include_adult=false&with_genres=animation&page=1`
-//     ).then((response) => {
-//         if (!response.ok)
-//             throw new Error(`Unable to fetch animated movies. Response status: ${response.status}`)
-//         return response.json();
-//     })
-//     .catch((error) => {
-//         throw error
-//     });
-// };
 
 export const getTvShows = () => {
     return fetch(
@@ -105,16 +93,29 @@ export const getTvShows = () => {
 export const getTvShow = ( id: string ) => {
     return fetch(
          `https://api.themoviedb.org/3/tv/${id}?api_key=${import.meta.env.VITE_TMDB_KEY}`
-    )
-    .then(res => res.json());
+    ).then((response) => {
+        if (!response.ok) {
+            throw new Error(`Failed to get tv show data. Response status: ${response.status} `);
+        }
+        return response.json();
+    })
+    .catch((error) => {
+        throw error;
+    });
 };
 
 export const getTvImages = ( id: string | number ) => {
     return fetch(
         `https://api.themoviedb.org/3/tv/${id}/images?api_key=${import.meta.env.VITE_TMDB_KEY}`  
-    )
-    .then(res => res.json())
-    .then((json) => json.posters);
+    ).then((response) => {
+        if (!response.ok) {
+            throw new Error("failed to reach images");
+        }
+        return response.json();
+    }).then((json) => json.posters)
+    .catch((error) => {
+        throw error
+    });
 };
 
 export const getTvCast = ( id: string | number ) => {
@@ -122,17 +123,27 @@ export const getTvCast = ( id: string | number ) => {
         `https://api.themoviedb.org/3/tv/${id}/aggregate_credits?api_key=` +
         import.meta.env.VITE_TMDB_KEY +
         "&language=en-US"
-    )
-    .then(res => res.json())
+    ).then((response) => {
+        if (!response.ok)
+            throw new Error(`Unable to fetch genres. Response status: ${response.status}`);
+        return response.json();
+    })
+    .catch((error) => {
+        throw error
+    });
 };
-
 
 export const getTvGenres = () => {
     return fetch(
          "https://api.themoviedb.org/3/genre/tv/list?api_key=" +
          import.meta.env.VITE_TMDB_KEY +
          "&language=en-US"
-    )
-    .then(res => res.json())
-    .then(json => json.genres);
+    ).then((response) => {
+        if (!response.ok)
+            throw new Error(`Unable to fetch genres. Response status: ${response.status}`);
+        return response.json();
+    })
+    .catch((error) => {
+        throw error
+    });
 };

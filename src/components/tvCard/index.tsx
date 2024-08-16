@@ -1,4 +1,5 @@
-import React from "react";
+import React, {MouseEvent, useContext} from "react";
+import Avatar from "@mui/material/Avatar";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -14,6 +15,7 @@ import IconButton from "@mui/material/IconButton";
 import img from '../../images/film-poster-placeholder.png';
 import { BaseTvShowProps } from "../../types/interfaces";
 import { Link } from "react-router-dom"; 
+import { TvShowsContext } from "../../contexts/tvshowsContext";
 
 const styles = {
     card: { maxWidth: 345 },
@@ -23,11 +25,37 @@ const styles = {
     },
 };
 
-const TvCard: React.FC<BaseTvShowProps> = (tvshow) => {
+interface TvCardProps {
+    tvshow: BaseTvShowProps;
+    action: (t: BaseTvShowProps) => React.ReactNode;
+}
+
+const TvCard: React.FC<TvCardProps> = ({tvshow}) => {
+    const { favourites, addToFavourites } = useContext(TvShowsContext);
+
+    const isFavourite = favourites.find((id) => id === tvshow.id)? true : false;
+   
+    const handleAddToFavourite = (e: MouseEvent<HTMLButtonElement>) => {
+       e.preventDefault();
+       addToFavourites(tvshow); 
+    };
 
     return (
         <Card sx={styles.card}>
-            <CardHeader title={tvshow.name} />
+            <CardHeader
+                avatar={
+                    isFavourite ? (
+                        <Avatar sx={styles.avatar}>
+                            <FavoriteIcon />
+                        </Avatar>
+                    ) : null
+                }
+                title={
+                    <Typography variant="h5" component="p">
+                        {tvshow.name}{""}
+                    </Typography>
+                }
+            />
             <CardMedia 
                 sx={styles.media}
                 image={
@@ -47,7 +75,7 @@ const TvCard: React.FC<BaseTvShowProps> = (tvshow) => {
                 </Grid>
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton aria-label="add to favourites">
+                <IconButton aria-label="add to favourites" onClick={handleAddToFavourite}>
                     <FavoriteIcon color="primary"  fontSize="large"/>
                 </IconButton>
                 <Link to={`/tv/${tvshow.id}`}>
