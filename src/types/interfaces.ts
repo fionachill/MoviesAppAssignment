@@ -32,6 +32,42 @@ export interface MovieDetailsProps extends BaseMovieProps {
         iso_3166_1: string;
         name: string;
     }[];
+    cast:{
+        adult: boolean;
+        gender: number;
+        id: number;
+        known_for_department: string;
+        name: string;
+        original_name: string;
+        popularity: number;
+        profile_path: string;
+        cast_id: number;
+        character: string;
+        credit_id: string;
+        order?: number;
+        job?: string;
+    }[];
+}
+
+export interface BaseMovieCastProps extends BaseMovieProps{
+    id: number;
+    cast: MovieCast[];
+}
+
+export interface MovieCast{
+    adult: boolean;
+    gender: number;
+    id: number;
+    known_for_department: string;
+    name: string;
+    original_name: string;
+    popularity: number;
+    profile_path: string;
+    cast_id: number;
+    character: string;
+    credit_id: string;
+    order?: number;
+    job?: string;
 }
 
 export interface MovieImage {
@@ -47,6 +83,7 @@ export interface MovieImage {
 export interface MoviePageProps {
     movie: MovieDetailsProps;
     images: MovieImage[];
+    cast: MovieCast[];
 }
 
 export interface MovieListPageTemplateProps extends BaseMovieListProps {

@@ -6,6 +6,7 @@ import { getMovie } from "../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 import { MovieDetailsProps } from "../types/interfaces";
+import MovieCastList from "../components/movieCastList";
 
 const MovieDetailsPage: React.FC= () => {
     const { id } = useParams();
@@ -28,6 +29,7 @@ const MovieDetailsPage: React.FC= () => {
                 <>
                     <PageTemplate movie={movie}>
                         <MovieDetails {...movie} />
+                        <MovieCastList castmembers={movie.cast} />
                     </PageTemplate>
                 </>
             ) : (
