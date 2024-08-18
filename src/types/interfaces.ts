@@ -32,26 +32,6 @@ export interface MovieDetailsProps extends BaseMovieProps {
         iso_3166_1: string;
         name: string;
     }[];
-    cast:{
-        adult: boolean;
-        gender: number;
-        id: number;
-        known_for_department: string;
-        name: string;
-        original_name: string;
-        popularity: number;
-        profile_path: string;
-        cast_id: number;
-        character: string;
-        credit_id: string;
-        order?: number;
-        job?: string;
-    }[];
-}
-
-export interface BaseMovieCastProps extends BaseMovieProps{
-    id: number;
-    cast: MovieCast[];
 }
 
 export interface MovieCast{
@@ -69,6 +49,12 @@ export interface MovieCast{
     order?: number;
     job?: string;
 }
+
+export interface MovieCastListProps {
+    id?: number;
+    cast: MovieCast[];
+}
+
 
 export interface MovieImage {
     file_path: string;
@@ -173,6 +159,21 @@ export interface Review {
     movieId: number,
 }
 
+export interface FantasyMovieProps{
+    author: string,
+    id: string,
+    title: string;
+    overview: string;
+    release_date?: string;
+    runtime?: number;
+    production_companies?: string[],
+    genre_ids?: number;
+}
+
+export interface FantasyMovieListProps {
+    fantasymovies: FantasyMovieProps[];
+}
+
 export interface DiscoverTvShows {
     page: number,
     total_pages: number,
@@ -180,40 +181,6 @@ export interface DiscoverTvShows {
     results: BaseTvShowProps[];
 }
 
-export interface BaseCastProps {
-    id: number, 
-    cast: [
-        adult: boolean,
-        gender: number,
-        id: number,
-        known_for_department: string,
-        name: string,
-        original_name?: string,
-        popularity?: number,
-        profile_path?: string,
-        roles?: [
-            {
-                credit_id: string,
-                character: string,
-                episode_count: number
-            }
-        ],
-        total_episode_count?: number,
-        order?: number,
-        jobs?: [
-            {
-                credit_id: string,
-                job: string,
-                episode_count: number
-            }
-        ],
-        department?: string,
-    ] 
-}
-
-export interface BaseTvCastListProps {
-    credits: BaseCastProps[];
-}
 
 export interface Person {
     adult: boolean,

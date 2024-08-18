@@ -52,6 +52,17 @@ export const getMovieImages = (id : string | number) => {
     });
 };
 
+export const getMovieCast = (id: string | number) => {
+    return fetch(
+        `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    )
+    .then((res) => res.json())
+    .then((json) => {
+        // console.log(json.results);
+        return json.results;
+    });
+};
+
 export const getMovieReviews = (id: string | number) => { // the movie id can be a string or a number
     return fetch(
         `https://api.themoviedb.org/3/movie/${id}/reviews?api_key=${import.meta.env.VITE_TMDB_KEY}`
@@ -69,6 +80,19 @@ export const getUpcomingMovies = () => {
     ).then((response) => {
         if (!response.ok)
             throw new Error(`Unable to fetch upcoming movies. Response status: {response.status}`)
+        return response.json();
+    })
+    .catch((error) => {
+        throw error
+    });
+};
+
+export const getMoviesByYear = (year: string | number ) => {
+    return fetch(
+        `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&year=${year}`
+    ).then((response) => {
+        if (!response.ok)
+            throw new Error(`Unable to fetch movies. Response status: ${response.status}`);
         return response.json();
     })
     .catch((error) => {
@@ -146,4 +170,8 @@ export const getTvGenres = () => {
     .catch((error) => {
         throw error
     });
+};
+
+export const getFantasyMovies = (fantasyMovieId: string) => {
+    //complete this later
 };

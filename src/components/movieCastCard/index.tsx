@@ -12,8 +12,8 @@ import { MovieCast } from "../../types/interfaces";
 import img from "../../images/film-poster-placeholder.png";
 
 const styles = {
-    card: {maxWidth: 345 },
-    media: { height: 500 },
+    card: {maxWidth: 250 },
+    media: { height: 250 },
     avatar: {
         backgroundColor: "rgb(255, 0, 0)",
     }, 
@@ -34,14 +34,12 @@ const MovieCastCard: React.FC<MovieCast> = (cast) => {
             />
             <CardContent>
                 <Grid container>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                         <Typography variant="h6" component="p">
-                            {cast.name}
+                            {cast.name}  
                         </Typography>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Typography variant="h6" component="p">
-                            {cast.character}
+                        <Typography variant="subtitle1" component="p">
+                            Role(s): {cast.character}
                         </Typography>
                     </Grid>
                 </Grid>

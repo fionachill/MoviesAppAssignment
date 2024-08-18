@@ -1,11 +1,13 @@
 import React from "react";
 import MovieHeader from "../headerMovie";
+import MovieCastList from "../movieCastList"
 import Grid from "@mui/material/Grid";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-import { getMovieImages } from "../../api/tmdb-api";
-import { MovieImage, MovieDetailsProps } from "../../types/interfaces";
+import { getMovieImages, getMovieCast } from "../../api/tmdb-api";
+import { MovieImage, MovieDetailsProps, MovieCastListProps, MovieCast } from "../../types/interfaces";
 import { useQuery } from "react-query";
+import { useQueries } from "react-query";
 import Spinner from "../spinner";
 
 const styles = {
@@ -23,25 +25,72 @@ const styles = {
 interface TemplateMoviePageProps {
     movie: MovieDetailsProps;
     children: React.ReactElement;
+    cast: MovieCastListProps;
 }
 
-const TemplateMoviePage: React.FC<TemplateMoviePageProps> = ({movie, children}) => {
-    const { data, error, isLoading, isError } = useQuery<MovieImage[], Error>(
-        ["images", movie.id],
-        () => getMovieImages(movie.id)
-    );
+const TemplateMoviePage: React.FC<TemplateMoviePageProps> = ({movie, children, cast}) => {
+    const [ imagesQuery, castQuery ] = useQueries({
+        queries: [
+            {
+                queryKey: ["images", movie.id],
+                queryFn: () => 
+                    getMovieImages(movie.id)
+            },
 
-    if (isLoading) {
-        return <Spinner />;
+            {
+                queryKey: ["cast", movie.id],
+                queryFn: () => 
+                    getMovieCast(movie.id)
+            },
+        ],
+    });
+    
+    if (imagesQuery.isLoading) return <Spinner />;
+    if (castQuery.isLoading) return <Spinner />;
+
+    if (imagesQuery.isError) {
+        return <h1>{(imagesQuery.error as Error).message}</h1>;
     }
 
-    if (isError) {
-        return <h1>{(error
+    if (castQuery.isError) {
+        return <h1>{(castQuery.error as Error).message}</h1>;
+    }   
+    
+    // const { data: movieImages, error: imagesError, isLoading: imagesLoading , isError: imagesIsError } = useQuery<MovieImage[], Error>(
+    //     ["images", movie.id],
+    //     () => getMovieImages(movie.id)
+    // );
+
+    // if (imagesLoading) {
+    //     return <Spinner />;
+    // }
+
+    // if (imagesIsError) {
+    //     return <h1>{(imagesError
             
-        ).message}</h1>;
-    }
+    //     ).message}</h1>;
+    // }
 
-    const images = data as MovieImage[];
+    
+
+    // const { data: castData, error: castError, isLoading: castLoading, isError: castIsError } = useQuery<MovieCast[], Error>(
+    //     ["cast", movie.id],
+    //     () => getMovieCast(movie.id)
+    // );  
+
+    // if (castLoading) {
+    //     return <Spinner />;
+    // }
+
+    // if (castIsError) {
+    //     return <h1>{(castError
+    //     ).message}</h1>
+    // }
+
+
+
+   const images = imagesQuery.data as MovieImage[];   
+    const displayedCast = castQuery.data as MovieCast[];
 
 
     return (
@@ -69,6 +118,9 @@ const TemplateMoviePage: React.FC<TemplateMoviePageProps> = ({movie, children}) 
                 </Grid>
                 <Grid item xs={9}>
                     {children}
+                </Grid>
+                <Grid item xs={9}>
+                    <MovieCastList cast={displayedCast} />
                 </Grid>
             </Grid>
         </>
