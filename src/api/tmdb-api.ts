@@ -87,9 +87,10 @@ export const getUpcomingMovies = () => {
     });
 };
 
-export const getMoviesByYear = (year: string | number ) => {
+export const getMoviesByYear = (year: number ) => {
     return fetch(
-        `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&year=${year}`
+        `https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_KEY}include_adult=false&include_video=false&language=en-US&page=1&primary_release_year=${year}&sort_by=primary_release_date.desc&year=${year}`
+
     ).then((response) => {
         if (!response.ok)
             throw new Error(`Unable to fetch movies. Response status: ${response.status}`);

@@ -14,6 +14,14 @@ export const genreFilter = (movie: BaseMovieProps, value: string) => {
     return genreId > 0 && genreIds ? genreIds.includes(genreId) : true;
 };
 
+export const yearFilter = (movie: BaseMovieProps, value: string) => {
+    return movie.release_date.search(value) !== -1;
+};
+
+export const keywordFilter = (movie: BaseMovieProps, value: string) => {
+    return movie.overview.toLowerCase().search(value.toLowerCase()) !== -1;
+}
+
 const styles = {
     root: {
         backgroundColor: "#bfbfbf",
@@ -30,9 +38,11 @@ interface MovieFilterUIProps {
     onFilterValuesChange: (f: string, s: string) => void;
     titleFilter: string;
     genreFilter: string;
+    yearFilter: string;
+    keywordFilter: string;
 }
 
-const MovieFilterUI: React.FC<MovieFilterUIProps> = ({ onFilterValuesChange, titleFilter, genreFilter }) => {
+const MovieFilterUI: React.FC<MovieFilterUIProps> = ({ onFilterValuesChange, titleFilter, genreFilter, keywordFilter, yearFilter }) => {
     const [ drawerOpen, setDrawerOpen ] = useState(false);
 
     return (
@@ -54,6 +64,7 @@ const MovieFilterUI: React.FC<MovieFilterUIProps> = ({ onFilterValuesChange, tit
                     onUserInput={onFilterValuesChange}
                     titleFilter={titleFilter}
                     genreFilter={genreFilter}
+                    keywordFilter={keywordFilter}
                 />
             </Drawer>
         </>

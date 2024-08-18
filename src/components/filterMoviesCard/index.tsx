@@ -32,9 +32,11 @@ interface FilterMoviesCardProps {
     onUserInput: (f: FilterOption, s: string) => void;
     titleFilter: string;
     genreFilter: string;
+    keywordFilter: string;
+    yearFilter: string;
 }
 
-const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({ titleFilter, genreFilter, onUserInput }) => {
+const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({ titleFilter, genreFilter, keywordFilter, yearFilter, onUserInput }) => {
     const { data, error, isLoading, isError } = useQuery<GenreData, Error>("genres", getGenres);
 
     if (isLoading) {
@@ -58,8 +60,16 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({ titleFilter, genreF
         handleChange(e, "title", e.target.value)
     }
 
+    const handleKeywordChange = (e: ChangeEvent<HTMLInputElement>) => {
+        handleChange(e, "keyword", e.target.value)
+    }
+
     const handleGenreChange = (e: SelectChangeEvent) => {
         handleChange(e, "genre", e.target.value)
+    }
+
+    const handleYearChange = (e: ChangeEvent<HTMLInputElement>) => {
+        handleChange(e, "year", e.target.value)
     };
 
     return (
@@ -79,6 +89,24 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({ titleFilter, genreF
                         variant="filled"
                         onChange={handleTextChange}
                     />
+                    <TextField
+                        sx={styles.formControl}
+                        id="filled-search"
+                        label="Keyword search"
+                        type="search"
+                        value={keywordFilter}
+                        variant="filled"
+                        onChange={handleKeywordChange}
+                    />
+                    <TextField
+                        sx={styles.formControl}
+                        id="filled-search"
+                        label="Search by year"
+                        type="search"
+                        value={yearFilter}
+                        variant="filled"
+                        onChange={handleYearChange}
+                    />
                     <FormControl sx={styles.formControl}>
                         <InputLabel id="genre-label">Genre</InputLabel>
                         <Select
@@ -96,6 +124,7 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({ titleFilter, genreF
                                 })}
                             </Select>
                     </FormControl>
+    
                 </CardContent>
             </Card>
             <Card sx={styles.root} variant="outlined">

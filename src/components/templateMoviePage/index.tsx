@@ -25,72 +25,46 @@ const styles = {
 interface TemplateMoviePageProps {
     movie: MovieDetailsProps;
     children: React.ReactElement;
-    cast: MovieCastListProps;
 }
 
-const TemplateMoviePage: React.FC<TemplateMoviePageProps> = ({movie, children, cast}) => {
-    const [ imagesQuery, castQuery ] = useQueries({
-        queries: [
-            {
-                queryKey: ["images", movie.id],
-                queryFn: () => 
-                    getMovieImages(movie.id)
-            },
-
-            {
-                queryKey: ["cast", movie.id],
-                queryFn: () => 
-                    getMovieCast(movie.id)
-            },
-        ],
-    });
+const TemplateMoviePage: React.FC<TemplateMoviePageProps> = ({movie, children}) => {
+    // const [ imagesQuery, castQuery ] = useQueries({
+    //         {
+    //             queryKey: ["images", movie.id],
+    //             queryFn: imagesQuery: () => getMovieImages(movie.id)
+    //         },
+    //         {
+    //             queryKey: ["cast", movie.id],
+    //             queryFn: castQuery() => getMovieCast(movie.id)
+    //         },
+    // });
     
-    if (imagesQuery.isLoading) return <Spinner />;
-    if (castQuery.isLoading) return <Spinner />;
+    // if (imagesQuery.isLoading || castQuery.isLoading) return <Spinner />;
 
-    if (imagesQuery.isError) {
-        return <h1>{(imagesQuery.error as Error).message}</h1>;
+    // if (imagesQuery.isError || castQuery.is.Error) {
+    //     return <h1>Error Loading Data</h1>;
+    // }
+  
+    const { data: movieImages, error: imagesError, isLoading: imagesLoading , isError: imagesIsError } = useQuery<MovieImage[], Error>(
+        ["images", movie.id],
+        () => getMovieImages(movie.id)
+    );
+
+    const { data: castData, error: castError, isLoading: castLoading, isError: castIsError } = useQuery<MovieCast[], Error>(
+        ["cast", movie.id],
+        () => getMovieCast(movie.id)
+    );  
+    if (imagesLoading || castLoading) {
+        return <Spinner />;
     }
 
-    if (castQuery.isError) {
-        return <h1>{(castQuery.error as Error).message}</h1>;
-    }   
-    
-    // const { data: movieImages, error: imagesError, isLoading: imagesLoading , isError: imagesIsError } = useQuery<MovieImage[], Error>(
-    //     ["images", movie.id],
-    //     () => getMovieImages(movie.id)
-    // );
-
-    // if (imagesLoading) {
-    //     return <Spinner />;
-    // }
-
-    // if (imagesIsError) {
-    //     return <h1>{(imagesError
-            
-    //     ).message}</h1>;
-    // }
-
-    
-
-    // const { data: castData, error: castError, isLoading: castLoading, isError: castIsError } = useQuery<MovieCast[], Error>(
-    //     ["cast", movie.id],
-    //     () => getMovieCast(movie.id)
-    // );  
-
-    // if (castLoading) {
-    //     return <Spinner />;
-    // }
-
-    // if (castIsError) {
-    //     return <h1>{(castError
-    //     ).message}</h1>
-    // }
+    if (imagesIsError || castIsError) {
+        return <h1>"Error retrieving Movie Details"</h1>;
+    }
 
 
-
-   const images = imagesQuery.data as MovieImage[];   
-    const displayedCast = castQuery.data as MovieCast[];
+   const images = movieImages as MovieImage[];   
+    const displayedCast = castData as MovieCast[];
 
 
     return (

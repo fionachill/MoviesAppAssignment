@@ -33,7 +33,7 @@ const SiteHeader: React.FC = () => {
         { label: "Favourite Movies", path: "/movies/favourites" },
         { label: "Upcoming Movies", path: "/movies/upcoming" },
         { label: "TV", path: "/tv" },
-        { label: "Fantasy Movies", path: "/fantasymovie/form"},
+        { label: "Fantasy Movies", path: "/addfantasymovie/form"},
     ];
 
     const handleMenuSelect = (pageURL: string) => {
@@ -52,7 +52,7 @@ const SiteHeader: React.FC = () => {
                         TMDB Client
                     </Typography>
                     <Typography variant="h6" sx={styles.title}>
-                        All you ever wanted to know about movies!
+                        Information on Movies & TV
                     </Typography> 
                     {isMobile ? (
                         <>

@@ -56,7 +56,7 @@ const CreateFantasyMovieForm: React.FC = () => {
     const onSubmit: SubmitHandler<FantasyMovieProps> = (fantasymovie) => {
         fantasymovie.id = fantasyMovieId;
         fantasymovie.genre_ids = genre;
-        // console.log(fantasymovie);
+        console.log(fantasymovie);
         context.addFantasyMovie(fantasymovie);
         setOpen(true);
     }
@@ -226,9 +226,9 @@ const CreateFantasyMovieForm: React.FC = () => {
                         {errors.production_companies.message}
                     </Typography>   
                 )}
-                 <Controller 
+                 <Controller
+                    name="genre_ids" 
                     control={control}
-                    name="genre_ids"
                     render={({ field }) => (
                         <TextField
                             {...field}
@@ -238,7 +238,7 @@ const CreateFantasyMovieForm: React.FC = () => {
                             label="Select Genre"
                             value={genre}
                             onChange={handleGenreChange}
-                            helperText="Please select a genre"
+                            autoFocus
                             >
                                 {genres.map((option) => (
                                     <MenuItem key={option.id} value={option.id}>

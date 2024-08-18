@@ -8,8 +8,8 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom";
 import { excerpt } from "../../util";
-
 import { FantasyMovieListProps } from "../../types/interfaces";
+
 // import SampleFantasyMovie from  "../../sampleFantasyMovie.tsx";
 
 const styles = {
@@ -21,7 +21,7 @@ const styles = {
 
 // let fantasymovies = [ SampleFantasyMovie, SampleFantasyMovie, SampleFantasyMovie, SampleFantasyMovie]
 
-const FantasyMoviesList: React.FC<FantasyMovieListProps> = (fantasymovies) => {
+const FantasyMoviesList: React.FC<FantasyMovieListProps> = ({fantasymovies}) => {
 
 
  return (

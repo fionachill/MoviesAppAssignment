@@ -2,7 +2,7 @@ import React from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { getMovies } from "../api/tmdb-api";
 import useFiltering from "../hooks/useFiltering";
-import MovieFilterUI, { titleFilter, genreFilter, } from "../components/movieFilterUI";
+import MovieFilterUI, { titleFilter, genreFilter, yearFilter, keywordFilter } from "../components/movieFilterUI";
 import { DiscoverMovies } from "../types/interfaces";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
@@ -20,10 +20,22 @@ const genreFiltering = {
     condition: genreFilter,
 };
 
+const yearFiltering = {
+    name: "year",
+    value: "",
+    condition: yearFilter,
+};
+
+const keywordFiltering = {
+    name: "keyword",
+    value: "",
+    condition: keywordFilter,
+};
+
 const HomePage: React.FC= () => {
     const { data, error, isLoading, isError } = useQuery<DiscoverMovies, Error>("discover", getMovies);
     const { filterValues, setFilterValues, filterFunction } = useFiltering(
-        [titleFiltering, genreFiltering]
+        [titleFiltering, genreFiltering, yearFiltering, keywordFiltering]
     );
 
     if (isLoading) {
@@ -37,8 +49,11 @@ const HomePage: React.FC= () => {
     const changeFilterValues = (type: string, value: string) => {
         const changedFilter = { name: type, value: value };
         const updatedFilterSet =
-            type === "title"
+            type === "title" 
             ? [changedFilter, filterValues[1]]
+            : type === "keyword"
+            ? [filterValues[3], changedFilter]
+            // ? [filterValues[2], changedFilter]
             : [filterValues[0], changedFilter];
         setFilterValues(updatedFilterSet);
     };
@@ -64,6 +79,8 @@ const HomePage: React.FC= () => {
                 onFilterValuesChange={changeFilterValues}
                 titleFilter={filterValues[0].value}
                 genreFilter={filterValues[1].value}
+                yearFilter={filterValues[2].value}
+                keywordFilter={filterValues[3].value}
             />
         </>       
     );

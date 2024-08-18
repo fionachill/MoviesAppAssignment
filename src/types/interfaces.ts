@@ -174,6 +174,10 @@ export interface FantasyMovieListProps {
     fantasymovies: FantasyMovieProps[];
 }
 
+export interface FantasyMovieListPageProps extends FantasyMovieListProps {
+    title: string;
+}
+
 export interface DiscoverTvShows {
     page: number,
     total_pages: number,
@@ -201,4 +205,4 @@ export interface Person {
 
 
 
-export type FilterOption = "title" | "genre" | "name";
+export type FilterOption = "title" | "genre" | "name" | "year" | "keyword";
