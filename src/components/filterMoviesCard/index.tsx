@@ -14,6 +14,8 @@ import Select from "@mui/material/Select";
 import { getGenres } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from "../spinner";
+import Button from "@mui/material/Button";
+
 
 const styles = {
     root: {
@@ -34,6 +36,7 @@ interface FilterMoviesCardProps {
     genreFilter: string;
     keywordFilter: string;
     yearFilter: string;
+    sort: boolean;
 }
 
 const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({ titleFilter, genreFilter, keywordFilter, yearFilter, onUserInput }) => {
@@ -70,6 +73,10 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({ titleFilter, genreF
 
     const handleYearChange = (e: ChangeEvent<HTMLInputElement>) => {
         handleChange(e, "year", e.target.value)
+    };
+
+    const handleSortChange = (e: ChangeEvent) => {
+        handleChange(e, "sort", "true")
     };
 
     return (
@@ -131,7 +138,7 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({ titleFilter, genreF
                 <CardContent>
                     <Typography variant="h5" component="h1">
                         <SortIcon fontSize="large" />
-                        Sort the movies.
+                        Sort movies alphabetically.
                     </Typography>
                 </CardContent>
             </Card>

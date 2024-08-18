@@ -205,4 +205,4 @@ export interface Person {
 
 
 
-export type FilterOption = "title" | "genre" | "name" | "year" | "keyword";
+export type FilterOption = "title" | "genre" | "name" | "year" | "keyword" | "sort";
